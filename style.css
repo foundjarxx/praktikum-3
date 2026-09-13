@@ -1,0 +1,295 @@
+/* ---------------------------------------------------------
+   Token dasar
+   Palet: meja kerja gelap + kertas struk krem + hijau uang
+--------------------------------------------------------- */
+:root {
+  --ink-dark: #1b1f1c;
+  --ink-darker: #14170f;
+  --paper: #faf6ec;
+  --paper-line: #e4dcc8;
+  --money-green: #2f6d4f;
+  --money-green-deep: #1f4d38;
+  --stamp-red: #b3452f;
+  --text-muted: #6b6f63;
+
+  --font-display: "Fraunces", serif;
+  --font-mono: "IBM Plex Mono", monospace;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: var(--ink-dark);
+  background-image:
+    radial-gradient(circle at 15% 10%, rgba(255,255,255,0.04), transparent 45%),
+    radial-gradient(circle at 85% 90%, rgba(255,255,255,0.03), transparent 45%);
+  color: var(--paper);
+  font-family: var(--font-mono);
+  padding: 48px 20px 64px;
+}
+
+.desk {
+  max-width: 880px;
+  margin: 0 auto;
+}
+
+/* ---------------------------------------------------------
+   Header
+--------------------------------------------------------- */
+.desk__header {
+  text-align: left;
+  margin-bottom: 36px;
+  max-width: 480px;
+}
+
+.desk__eyebrow {
+  margin: 0 0 6px;
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  letter-spacing: 0.02em;
+}
+
+.desk__title {
+  margin: 0 0 10px;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: clamp(2.2rem, 5vw, 3rem);
+  color: var(--paper);
+  line-height: 1.05;
+}
+
+.desk__sub {
+  margin: 0;
+  color: #b9c2b3;
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+
+/* ---------------------------------------------------------
+   Layout
+--------------------------------------------------------- */
+.layout {
+  display: grid;
+  grid-template-columns: 300px 1fr;
+  gap: 28px;
+  align-items: start;
+}
+
+@media (max-width: 720px) {
+  .layout {
+    grid-template-columns: 1fr;
+  }
+}
+
+.panel {
+  background: var(--ink-darker);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 4px;
+  padding: 26px;
+}
+
+.panel__heading {
+  margin: 0 0 20px;
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: 1.15rem;
+  color: var(--paper);
+}
+
+/* ---------------------------------------------------------
+   Form
+--------------------------------------------------------- */
+.field {
+  margin-bottom: 18px;
+}
+
+.field label {
+  display: block;
+  margin-bottom: 6px;
+  font-size: 0.78rem;
+  color: var(--text-muted);
+}
+
+.field input {
+  width: 100%;
+  padding: 10px 12px;
+  background: var(--ink-dark);
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 3px;
+  color: var(--paper);
+  font-family: var(--font-mono);
+  font-size: 0.95rem;
+}
+
+.field input:focus {
+  outline: 2px solid var(--money-green);
+  outline-offset: 1px;
+  border-color: var(--money-green);
+}
+
+.field input::placeholder {
+  color: #5c6156;
+}
+
+.form-error {
+  color: var(--stamp-red);
+  font-size: 0.82rem;
+  margin: -8px 0 14px;
+}
+
+.btn-add {
+  width: 100%;
+  padding: 12px 14px;
+  background: var(--money-green);
+  color: var(--paper);
+  border: none;
+  border-radius: 3px;
+  font-family: var(--font-mono);
+  font-weight: 600;
+  font-size: 0.92rem;
+  cursor: pointer;
+  transition: background 120ms ease;
+}
+
+.btn-add:hover,
+.btn-add:focus-visible {
+  background: var(--money-green-deep);
+}
+
+.btn-add:active {
+  transform: translateY(1px);
+}
+
+/* ---------------------------------------------------------
+   Receipt panel — kertas struk di atas dasar gelap
+--------------------------------------------------------- */
+.receipt-panel {
+  padding: 0;
+  background: transparent;
+  border: none;
+}
+
+.receipt-panel .panel__heading {
+  padding: 26px 26px 0;
+  color: var(--paper);
+}
+
+.receipt {
+  background: var(--paper);
+  color: var(--ink-dark);
+  margin-top: 18px;
+  padding: 24px 26px 22px;
+  border-radius: 2px;
+  position: relative;
+  /* pinggiran zig-zag ala struk kasir */
+  --notch: 14px;
+  clip-path: polygon(
+    0 0, 100% 0, 100% 100%,
+    calc(100% - var(--notch)) calc(100% - 6px), calc(100% - var(--notch) * 2) 100%,
+    calc(100% - var(--notch) * 3) calc(100% - 6px), calc(100% - var(--notch) * 4) 100%,
+    calc(100% - var(--notch) * 5) calc(100% - 6px), calc(100% - var(--notch) * 6) 100%,
+    calc(100% - var(--notch) * 7) calc(100% - 6px), calc(100% - var(--notch) * 8) 100%,
+    calc(100% - var(--notch) * 9) calc(100% - 6px), calc(100% - var(--notch) * 10) 100%,
+    calc(100% - var(--notch) * 11) calc(100% - 6px), 0 100%
+  );
+  padding-bottom: 36px;
+}
+
+.receipt__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.receipt__item {
+  display: grid;
+  grid-template-columns: 1fr auto auto;
+  align-items: baseline;
+  gap: 10px;
+  padding: 10px 0;
+  border-bottom: 1px dashed var(--paper-line);
+  font-size: 0.92rem;
+}
+
+.receipt__item:first-child {
+  padding-top: 0;
+}
+
+.item-name {
+  overflow-wrap: anywhere;
+}
+
+.item-amount {
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.item-delete {
+  background: none;
+  border: 1px solid var(--stamp-red);
+  color: var(--stamp-red);
+  border-radius: 3px;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  padding: 4px 8px;
+  cursor: pointer;
+  line-height: 1;
+  transition: background 120ms ease, color 120ms ease;
+}
+
+.item-delete:hover,
+.item-delete:focus-visible {
+  background: var(--stamp-red);
+  color: var(--paper);
+}
+
+.empty-state {
+  margin: 6px 0 0;
+  color: var(--text-muted);
+  font-size: 0.88rem;
+  font-style: italic;
+}
+
+.receipt__divider {
+  border-top: 1px solid var(--paper-line);
+  margin: 18px 0 14px;
+}
+
+.receipt__summary {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.summary-row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.9rem;
+  color: var(--text-muted);
+}
+
+.summary-row--total {
+  font-family: var(--font-display);
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: var(--money-green-deep);
+  padding-top: 4px;
+}
+
+/* ---------------------------------------------------------
+   Footer
+--------------------------------------------------------- */
+.desk__footer {
+  margin-top: 36px;
+  text-align: left;
+  color: var(--text-muted);
+  font-size: 0.78rem;
+}
+
+.desk__footer p {
+  margin: 0;
+}
